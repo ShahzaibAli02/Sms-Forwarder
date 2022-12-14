@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Sms Forwarder</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forwarding_url">Forwarding Url</string>
+    <string name="sim_selection">Sim Selection</string>
+    <string name="add_item">Add Item</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="add_in_ignore_list">Add in ignore list</string>
+    <string name="add_in_include_list">Add in include list</string>
+    <string name="save">Save</string>
+    <string name="post">Post</string>
+    <string name="get">Get</string>
+</resources>

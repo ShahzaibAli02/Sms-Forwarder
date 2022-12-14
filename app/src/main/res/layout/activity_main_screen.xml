@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainScreen.MainScreenActivity">
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchOnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="On/Off"
+        android:fontFamily="@font/robot_medium"
+        android:layout_gravity="end"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:gravity="center"
+        >
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputForwardingUrl"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppTheme.TextInputLayoutList"
+            android:hint="@string/forwarding_url"
+            app:boxStrokeWidth="2dp"
+            android:autofillHints="emailAddress"
+            app:placeholderText="example@gmail.com"
+            android:textColorHint="@color/hint_text_color"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robot_medium"
+                android:text="https://eon56g844zwsubs.m.pipedream.net"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/robot_medium"
+            android:text="Save"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/main_color"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            app:cornerRadius="10dp" />
+    </LinearLayout>
+    <RadioGroup
+        android:id="@+id/radioProtocolSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/radioPost"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/post"
+            android:textSize="@dimen/_15sdp"
+            android:textAllCaps="true"
+            android:fontFamily="@font/robot_medium"
+            />
+        <RadioButton
+            android:id="@+id/radioGet"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/get"
+            android:textSize="@dimen/_15sdp"
+            android:textAllCaps="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:fontFamily="@font/robot_medium"
+            />
+    </RadioGroup>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:gravity="center"
+        >
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnIncludeList"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/robot_medium"
+            android:text="Include List"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/color_accepted"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            app:cornerRadius="10dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnIgnoreList"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/robot_medium"
+            android:text="Ignore List"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_gravity="center"
+            android:backgroundTint="#E64A19"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            app:cornerRadius="10dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sim_selection"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_18sdp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/robot_medium"
+        />
+
+    <RadioGroup
+        android:id="@+id/radioGroupSimSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/radioSim1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Sim 1"
+            android:textSize="@dimen/_15sdp"
+            android:fontFamily="@font/robot_medium"
+            />
+        <RadioButton
+            android:id="@+id/radioSim2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Sim 2"
+            android:textSize="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/robot_medium"
+            />
+        <RadioButton
+            android:id="@+id/radioBoth"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Both"
+            android:textSize="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/robot_medium"
+            />
+
+    </RadioGroup>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        app:cardElevation="20dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_5sdp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last forwarded message"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:fontFamily="@font/robot_medium"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Sender"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/robot_medium"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/_15sdp"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Message"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/robot_medium"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/_15sdp"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/robot_medium"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/_15sdp"
+                    />
+
+
+
+            </LinearLayout>
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewMessages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_message"
+                tools:itemCount="4"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</LinearLayout>

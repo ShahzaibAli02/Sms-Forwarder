@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_10sdp"
+    android:background="@drawable/ic_dialog_back"
+
+    android:orientation="vertical">
+
+
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:gravity="center"
+        android:textSize="@dimen/_17sdp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"
+        />
+    <TextView
+        android:id="@+id/txtMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Message"
+        android:gravity="center"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPositive"
+        android:layout_marginTop="30dp"
+        android:minWidth="200dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="Yes"
+        app:strokeColor="@color/black"
+        app:strokeWidth="0.5dp"
+        app:cornerRadius="20dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/color_accepted"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnNegative"
+        android:minWidth="200dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="No"
+        app:strokeColor="@color/black"
+        app:strokeWidth="0.5dp"
+        app:cornerRadius="20dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/grey"
+        />
+</LinearLayout>

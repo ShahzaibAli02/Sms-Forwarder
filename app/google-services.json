@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "414595561795",
+    "project_id": "sms-forwarder-d4624",
+    "storage_bucket": "sms-forwarder-d4624.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414595561795:android:32b653a8b00ae074be17f6",
+        "android_client_info": {
+          "package_name": "com.sms.smsforwarder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414595561795-qo9211e2hlkqaitf1guls1fqqsoqbjjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpkQWFyn_y-lv5RPFTUtDcg98wBSHYOvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414595561795-qo9211e2hlkqaitf1guls1fqqsoqbjjj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
