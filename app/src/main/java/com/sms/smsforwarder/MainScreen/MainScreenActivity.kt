@@ -11,11 +11,15 @@ import com.sms.smsforwarder.BaseActivity
 import com.sms.smsforwarder.MessageListener
 import com.sms.smsforwarder.R
 import com.sms.smsforwarder.adapters.MessageAdapter
+import com.sms.smsforwarder.adapters.ParamsAdapter
 import com.sms.smsforwarder.data.model.Message
+import com.sms.smsforwarder.data.model.Param
+import com.sms.smsforwarder.data.roomdb.AppDatabase
 import com.sms.smsforwarder.databinding.ActivityMainScreenBinding
 import com.sms.smsforwarder.includeIgnoreList.IncludeIgnoreListActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.jar.Manifest
+import kotlin.random.Random
 
 
 @AndroidEntryPoint
@@ -25,6 +29,8 @@ class MainScreenActivity : BaseActivity()
     private lateinit var binding:ActivityMainScreenBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: MessageAdapter
+    private lateinit var sim1ParamAdapter:ParamsAdapter
+    private lateinit var sim2ParamAdapter:ParamsAdapter
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -32,8 +38,18 @@ class MainScreenActivity : BaseActivity()
         setContentView(binding.root)
 
 
+
         adapter= MessageAdapter()
+        sim1ParamAdapter= ParamsAdapter(0)
+        sim2ParamAdapter= ParamsAdapter(1)
+
+        binding.recyclerViewSim1Param.adapter=sim1ParamAdapter
+
+        binding.recyclerViewSim2Param.adapter=sim2ParamAdapter
+
         viewModel=ViewModelProvider(this)[MainViewModel::class.java]
+
+
 
 
         binding.btnIncludeList.setOnClickListener { openIncludeIgnoreListActivity(false) }
@@ -41,10 +57,11 @@ class MainScreenActivity : BaseActivity()
 
 
 
+        binding.switchIncludeAll.isChecked=viewModel.getIncludeAllSwitchVal()
         binding.switchOnOff.isChecked=viewModel.getSwitchVal()
         binding.recyclerViewMessages.adapter=adapter
 
-       //binding.inputForwardingUrl.editText?.setText(viewModel.getForwardingUrl())
+        binding.inputForwardingUrl.editText?.setText(viewModel.getForwardingUrl())
 
 
 
@@ -61,9 +78,34 @@ class MainScreenActivity : BaseActivity()
 
         }
 
+
+        binding.switchIncludeAll.setOnCheckedChangeListener { compoundButton, isChecked ->
+
+            if(isChecked)
+            {
+                showMessageDialog(message = "Turning on this button means app will forward all messages from all senders", positiveButtonMsg = "Turn On", negativeButtonMsg = "Don't Turn On", messageListener = object:MessageListener{
+                    override fun onSelected(b: Boolean)
+                    {
+                        //DO NOTHING
+                        if(!b)
+                        {
+                            binding.switchIncludeAll.isChecked=false
+                        }
+                        viewModel.setIncludeAllSwitchVal(b)
+
+                    }
+
+                })
+            }
+            else
+            {
+                viewModel.setIncludeAllSwitchVal(false)
+            }
+        }
         binding.switchOnOff.setOnCheckedChangeListener { compoundButton, isChecked ->
             viewModel.setSwitch(isChecked)
         }
+
 
 
 
@@ -75,8 +117,36 @@ class MainScreenActivity : BaseActivity()
         {
             requestPermission()
         }
+
+
+        sim1ParamAdapter.onDelete=::deleteParam
+        sim1ParamAdapter.onSave=::saveParam
+
+
+        sim2ParamAdapter.onDelete=::deleteParam
+        sim2ParamAdapter.onSave=::saveParam
+
+
+        viewModel.getSim1Params().observe(this)
+        {
+            sim1ParamAdapter.setList(it)
+        }
+        viewModel.getSim2Params().observe(this)
+        {
+            sim2ParamAdapter.setList(it)
+        }
     }
 
+
+    private fun saveParam(param: Param)
+    {
+        viewModel.saveParam(param)
+    }
+    private fun deleteParam(param: Param)
+    {
+        viewModel.deleteParam(param)
+        showMessage("Deleted...")
+    }
     private fun readAllMessages(messages: List<Message>)
     {
         adapter.setList(messages)

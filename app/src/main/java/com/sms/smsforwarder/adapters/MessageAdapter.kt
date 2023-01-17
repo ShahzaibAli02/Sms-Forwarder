@@ -1,5 +1,6 @@
 package com.sms.smsforwarder.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,15 @@ class MessageAdapter : RecyclerView.Adapter<MessageAdapter.ViewHolder>()
 
             txtMessage.text=message.message
             txtSender.text=message.sender
+            txtMessage.setOnClickListener {
+                AlertDialog.Builder(holder.itemView.context)
+                    .setTitle("Message")
+                    .setMessage(message.message)
+                    .setPositiveButton("OK",null)
+                    .show()
+
+
+            }
             txtStatus.text=if(message.status==1) "Sent" else "Failed"
             txtStatus.setTextColor(if(message.status==1) Color.GREEN else Color.RED)
         }

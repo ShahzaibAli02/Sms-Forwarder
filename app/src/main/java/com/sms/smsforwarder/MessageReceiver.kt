@@ -4,30 +4,36 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.telephony.PhoneNumberUtils
 import android.telephony.SmsMessage
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.firebase.auth.FirebaseAuth
 import com.sms.smsforwarder.data.SharedPref
 import com.sms.smsforwarder.data.model.Message
+import com.sms.smsforwarder.data.model.Param
 import com.sms.smsforwarder.data.roomdb.AppDatabase
 import com.sms.smsforwarder.data.roomdb.DatabaseDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.collections.HashMap
 
 class MessageReceiver : BroadcastReceiver()
 {
 
-    val TAG = "smsforwarder"
     lateinit var sharedPref: SharedPref
     lateinit var databaseDao: DatabaseDao
+    lateinit var context: Context
     override fun onReceive(context: Context, intent: Intent)
     {
 
+
+        this.context=context
         sharedPref = SharedPref(context)
         databaseDao = AppDatabase.getDatabase(context).databaseDao()
         val data = intent.extras
@@ -49,13 +55,13 @@ class MessageReceiver : BroadcastReceiver()
 
 
         //If Its ON
-        if (sharedPref.getBool(SharedPref.KEY_ON_OFF_SWITCH, true) && sharedPref.getString(SharedPref.KEY_FORWARDING_URL, "")!!
+        if (sharedPref.getBool(SharedPref.KEY_ON_OFF_SWITCH, true) && sharedPref.getString(FirebaseAuth.getInstance().currentUser!!.uid, "")!!
                 .isNotEmpty()
         )
         {
 
 
-            val isInWhiteList=true
+            val isInWhiteList=checkIsInWhiteList(sender)
             //TODO CHECK PHONE IN WHITELIST
             //TODO CHECK SIM SLOT MATCHES
 
@@ -64,26 +70,37 @@ class MessageReceiver : BroadcastReceiver()
             mLog("SIM SLOT :"+simSlot)
             mLog("SELECTD SIM SLOT :"+selectedSimSlot)
 
-            if(isInWhiteList && (simSlot==-1 || selectedSimSlot==2 || (selectedSimSlot==simSlot)))
+            if(isInWhiteList && (simSlot==-1 ||  selectedSimSlot==2 || (selectedSimSlot==simSlot)))
             {
                 val hashMap = HashMap<String, String>()
                 hashMap["sms_sender"] = sender
                 hashMap["sms_body"] = Message
                 hashMap["sim_number"] = simSlot.toString()
-                hashMap["service_central_address"] = serviceCenterAddress!!
+                hashMap["sms_source"] = serviceCenterAddress!!
+
+
+                //simAdditionalParams
+                val simAdditionalParams:HashMap<String,String> = getSimAdditionalParams(simSlot)
+                hashMap.putAll(simAdditionalParams)
+
+
                 val message = Message(0, Calendar.getInstance().timeInMillis, sender, Message, 0)
+
+
+
 
                 if (sharedPref.getInt(SharedPref.KEY_PROTOCOL_SELECTION, 0) == 0)
                 {
                     makeVolleyPostRequest(context, message, hashMap)
-                } else
+                }
+                else
                 {
                     makeVolleyGetRequest(context, message, hashMap)
                 }
             }
             else
             {
-                mLog("SIM SLOT NOT MATCH")
+                mLog("SIM SLOT NOT MATCH | NOT IN WHITELIST")
             }
 
 
@@ -97,6 +114,47 @@ class MessageReceiver : BroadcastReceiver()
 
     }
 
+    private fun getSimAdditionalParams(simSlot: Int): HashMap<String, String>
+    {
+
+        val hashMap=kotlin.collections.HashMap<String,String>()
+
+
+        if(simSlot!=-1)
+        {
+            var paramsList:List<Param> =  databaseDao.getAllParams(simSlot)
+            for(param in paramsList)
+            {
+                if(param.key.isNotEmpty())
+                {
+                    hashMap[param.key] = param.value
+                }
+            }
+        }
+
+        return hashMap
+    }
+
+    private fun checkIsInWhiteList(sender:String):Boolean
+    {
+
+        if(sharedPref.getBool(SharedPref.KEY_INCLUDE_ALL,false))
+            return true
+
+        val list=databaseDao.getWhiteListedNumbers();
+        if(list.isNotEmpty())
+        {
+
+            for(contact in list)
+            {
+                if(contact.phone.trim().equals(sender.trim(),ignoreCase = true))
+                    return true
+                if(PhoneNumberUtils.compare(context,contact.phone,sender))
+                    return true
+            }
+        }
+        return false;
+    }
     private fun mLog(message:String)
     {
         Log.d("MYTAG", message)
@@ -110,7 +168,10 @@ class MessageReceiver : BroadcastReceiver()
     {
 
         val queue = Volley.newRequestQueue(context)
-        var url = sharedPref.getString(SharedPref.KEY_FORWARDING_URL, "")!!
+
+        //Content-Type: application/octet-stream
+        var url =  sharedPref.getString(FirebaseAuth.getInstance().currentUser!!.uid, "")!!
+
         if (!url.endsWith("/"))
         {
             url += "/"
@@ -130,12 +191,16 @@ class MessageReceiver : BroadcastReceiver()
         }
         )
         {
+
+            override fun getHeaders(): MutableMap<String, String> {
+            val headers = HashMap<String, String>()
+            headers["Content-Type"] = "application/octet-stream"
+            return headers
+             }
             override fun getParams(): Map<String, String> {
                 return hashMap
             }
         }
-
-
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
@@ -167,7 +232,7 @@ class MessageReceiver : BroadcastReceiver()
 
     private fun getFormatedUrl(hashMap: HashMap<String, String>): String
     {
-        var url = sharedPref.getString(SharedPref.KEY_FORWARDING_URL, "")!!
+        var url = sharedPref.getString(FirebaseAuth.getInstance().currentUser!!.uid, "")!!
 
         if (!url.endsWith("/"))
         {

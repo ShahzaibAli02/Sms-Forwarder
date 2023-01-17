@@ -56,10 +56,10 @@
             android:visibility="gone"
             tools:listitem="@layout/item_include_ignore"
             />
+
         <include
             android:id="@+id/lyt_empty"
             layout="@layout/lyt_empty"
-
             />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAdd"

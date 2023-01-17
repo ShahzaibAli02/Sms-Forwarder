@@ -3,6 +3,7 @@ package com.sms.smsforwarder.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telephony.PhoneNumberUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
@@ -34,6 +35,8 @@ class LoginActivity : BaseActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+
+
 
         viewModel=ViewModelProvider(this)[LoginViewModel::class.java]
         binding=ActivityLoginBinding.inflate(layoutInflater)

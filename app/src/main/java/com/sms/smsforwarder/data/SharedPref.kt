@@ -14,6 +14,7 @@ class SharedPref(context: Context) {
         val KEY_SIM_SELECTION="sim_selection" //0 = SIM1 , 1=SIM2  , 2= BOTH
         val KEY_PROTOCOL_SELECTION="protocol_selection" //0 = POST , 1=GET
         val KEY_ON_OFF_SWITCH="on_off"
+        val KEY_INCLUDE_ALL="include_all"
 
     }
     init {

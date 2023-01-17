@@ -13,4 +13,5 @@
     <string name="save">Save</string>
     <string name="post">Post</string>
     <string name="get">Get</string>
+    <string name="include_all">Include All</string>
 </resources>

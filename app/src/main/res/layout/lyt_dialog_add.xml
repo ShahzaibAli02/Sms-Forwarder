@@ -67,7 +67,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/robot_medium"
-                android:inputType="phone"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

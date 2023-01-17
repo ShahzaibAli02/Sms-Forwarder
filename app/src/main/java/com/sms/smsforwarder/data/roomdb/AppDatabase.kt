@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.sms.smsforwarder.data.model.Contact
 import com.sms.smsforwarder.data.model.Message
+import com.sms.smsforwarder.data.model.Param
 
-@Database(entities = [Contact::class, Message::class], version = 3)
+@Database(entities = [Contact::class, Message::class,Param::class], version = 6)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun databaseDao(): DatabaseDao
 
@@ -23,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context,
                     AppDatabase::class.java,
-                    "smsforwarder")
+                    "smsforwarder").fallbackToDestructiveMigration().allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 instance
