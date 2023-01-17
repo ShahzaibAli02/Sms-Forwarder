@@ -53,7 +53,7 @@ class IncludeIgnoreListActivity : BaseActivity()
 
         adapter.setDeleteListener(::onClickDelete)
         binding.imgBack.setOnClickListener { onBackPressed() }
-        binding.fabAdd.setOnClickListener {showAddDialog()}
+       // binding.fabAdd.setOnClickListener {showAddDialog()}
 
 
 
